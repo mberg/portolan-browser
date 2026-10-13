@@ -36,7 +36,7 @@
         <template v-else>
           <WidgetHook id="view-search-results-start" />
           <div id="search-map" v-if="data">
-            <MapView :stac="parent" :children="data" popover />
+            <MapView :stac="parent" :children="data" onfocusOnly popover />
           </div>
           <Catalogs
             v-if="isCollectionSearch" :catalogs="results" collectionsOnly

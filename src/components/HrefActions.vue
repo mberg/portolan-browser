@@ -49,10 +49,10 @@ import LinkActions from '../../linkActions.config';
 import AuthUtils from './auth/utils';
 import { Asset } from 'stac-js';
 import { browserProtocols } from 'stac-js/src/http';
-import { imageMediaTypes, geojsonMediaType, svgMediaType, wozMediaTypes, zarrMediaTypes } from 'stac-js/src/mediatypes';
+import { svgMediaType, zarrMediaTypes } from 'stac-js/src/mediatypes';
+import { isMapRenderableAsset } from '../utils/mapAssets.js';
 
 const disableDownloadTypes = [...zarrMediaTypes];
-const mapTypes = imageMediaTypes.concat([geojsonMediaType]).concat(wozMediaTypes);
 
 let i = 0;
 
@@ -145,8 +145,12 @@ export default {
       else if (!this.isBrowserProtocol) {
         return false;
       }
-      // Otherwise, all images that a browser can read are supported + GeoJSON
-      else if (mapTypes.includes(this.data?.type)) {
+      // Otherwise, only what the MapLibre StacMapLayer can render gets the
+      // button: COGs, PMTiles, XYZ vector tiles, TileJSON, and GeoParquet.
+      // Browser images, SVG, GeoJSON, and Zarr have no renderer there, and a
+      // button that tears down the shown layers to draw nothing is worse
+      // than no button.
+      else if (isMapRenderableAsset(this.data)) {
         return true;
       }
       return false;
