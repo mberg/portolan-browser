@@ -7,7 +7,7 @@ For example, you could open COPC files in a dedicated COPC Viewer, which otherwi
 
 - [User Guide](#user-guide)
   - [Assets](#assets)
-  - [Catalogs, Collections and Items](#catalogs-collections-and-items)
+  - [Catalogs, collections, and items](#catalogs-collections-and-items)
   - [Links](#links)
 - [Developer Guide](#developer-guide)
 
@@ -40,7 +40,7 @@ The path is fixed to `./src/actions/assets/`, the file extension is always `.js`
 In-between add the file name from the list above.
 The import name should be the file name without extension (i.e. `Felt` again).
 
-Lastly, add the import name to the list of exports, e.g.
+Then add the import name to the list of exports:
 
 ```js
 export default {
@@ -51,7 +51,7 @@ export default {
 
 Save the file and restart / rebuild STAC Browser.
 
-### Catalogs, Collections and Items
+### Catalogs, collections, and items
 
 The following actions are available:
 
@@ -62,7 +62,7 @@ All actions for catalogs, collections and items are stored in the folder [`src/a
 
 The actions can be enabled by adding them to the [`stacActions.config.js`](../stacActions.config.js) file.
 Open the file and you'll see a number of imports and exports.
-Import the file for the action that you want to enable, e.g. for stac-map:
+Import the file for the action that you want to enable, such as stac-map:
 
 ```js
 import StacMap from './src/actions/stac/StacMap.js';
@@ -72,7 +72,7 @@ The path is fixed to `./src/actions/stac/`, the file extension is always `.js`.
 In-between add the file name from the list above.
 The import name should be the file name without extension (i.e. `StacMap` again).
 
-Lastly, add the import name to the list of exports, e.g.
+Then add the import name to the list of exports:
 
 ```js
 export default {
@@ -96,7 +96,7 @@ All actions for links are stored in the folder [`src/actions/links`](../src/acti
 
 The actions can be enabled by adding them to the [`linkActions.config.js`](../linkActions.config.js) file.
 Open the file and you'll see a number of imports and exports.
-Import the file for the action that you want to enable, e.g. for PMTiles / Protomaps:
+Import the file for the action that you want to enable, such as PMTiles / Protomaps:
 
 ```js
 import Protomaps from './src/actions/links/Protomaps.js';
@@ -104,9 +104,9 @@ import Protomaps from './src/actions/links/Protomaps.js';
 
 The path is fixed to `./src/actions/links/`, the file extension is always `.js`.
 In-between add the file name from the list above.
-The import name should be the file name without extension (i.e. `Protomaps` again).
+The import name should be the file name without extension (`Protomaps` in this case).
 
-Lastly, add the import name to the list of exports, e.g.
+Then add the import name to the list of exports:
 
 ```js
 export default {
@@ -137,7 +137,7 @@ All interfaces look as follows:
 - `get onClick() : function(event: MouseEvent)`
   - Returns a function that accepts a [MouseEvent](https://developer.mozilla.org/de/docs/Web/API/MouseEvent). This is the action to execute in case no `href` is set.
 - `get uri() : string`
-  - Returns the URL to use as `href` for the button/link. This should a valid URL that a browser can navigate to, including the asset, object or link URL as a query parameter or so.
+  - Returns the URL to use as `href` for the button/link. This should be a valid URL that a browser can open. It usually carries the URL of the STAC entity as a query parameter.
 - `get show() : boolean`
   - Return `true` if the action should be shown for the given asset, catalog, collection, item or link. Return `false` otherwise, default to `false`.
 - `get text() : string`

@@ -124,10 +124,10 @@ Renders a simple text with a heading.
 | `text`      | String  | `''`    | Rendered as the body, CommonMark (Markdown) is supported. |
 | `allowHTML` | Boolean | `false` | Allows HTML tags in the `text`. |
 
-### ExternalWarning
+### `ExternalWarning`
 
 Renders a banner indicating that the shown catalog, collection or item is not
-part of the configured catalog (i.e. external content, see the [`allowExternalAccess`](options.md#allowexternalaccess) option).
+part of the configured catalog (external content, see the [`allowExternalAccess`](options.md#allowexternalaccess) option).
 This helps users understand that they left the configured catalog and are now looking at
 data provided by an external data source.
 

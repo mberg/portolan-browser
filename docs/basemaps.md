@@ -109,6 +109,8 @@ Example to use OpenFreeMap as basemap:
 }
 ```
 
+> Portolan Browser uses a MapLibre map and does not attach these credentials.
+
 By default, STAC Browser attaches the credentials configured through `authConfig` to all requests
 made by ol-mapbox-style (style, sources, sprites, glyphs, tiles) for URLs that are part of the
 catalog. If you define your own [`transformRequest`](https://openlayers.org/ol-mapbox-style/typedefs.html#Options)
