@@ -78,3 +78,17 @@ One canonical home per fact. If a value like a color, URL, or policy line exists
 <!-- Add instructions for this repo below. The block above is overwritten by
      sync. This file is the only home for repo-specific agent rules: CLAUDE.md
      carries the import and nothing else. -->
+
+## Upstream sync policy
+
+This repo is a fork of [radiantearth/stac-browser](https://github.com/radiantearth/stac-browser). The fork replaces the OpenLayers map stack with MapLibre. Upstream files whose only consumers are the OpenLayers stack stay in the tree on purpose. A delete would create a modify/delete conflict on every future upstream sync. Known inert carriers, kept as of October 2026:
+
+- `src/utils.js` `restoreUrlTemplateParams` (no callers)
+- `tests/e2e/map-layer-options.spec.js` and `tests/e2e/zarr-display-limit.spec.js` (fully skipped, they drive ol-stac APIs)
+- `tests/manual/display-limit/collection.json` (fixture for the skipped specs)
+- `mapping.displayLimit.*` and `mapping.focusHint` locale keys
+- `src/theme/map.scss` (imported by nothing)
+
+Do not delete these files. Do not wire new code to them. Map options that the MapLibre stack does not implement carry a note in `docs/options.md`.
+
+Dark mode is out of scope for the fork's map components. The default config enforces the light color mode. Upstream dark-mode styling for map controls is not ported.
