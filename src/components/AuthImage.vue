@@ -10,6 +10,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import { markRaw } from 'vue';
+import { size } from 'stac-js/src/utils.js';
 import { acquire, needsAuthenticatedFetch, release } from '../models/authMedia';
 
 /**
@@ -87,10 +88,17 @@ export default {
     };
   },
   computed: {
-    ...mapState(['requestHeaders']),
+    ...mapState(['requestHeaders', 'privateQueryParameters', 'globalRequestQueryParameters']),
     ...mapGetters(['getRequestUrl']),
     // The image URL incl. any query-parameter credentials
     requestUrl() {
+      // With no query credentials configured there is nothing to add, and
+      // `src` is documented as absolute, so the URI parsing getRequestUrl
+      // does per image is skipped. A browse page renders hundreds of card
+      // thumbnails through this computed.
+      if (size(this.privateQueryParameters) === 0 && size(this.globalRequestQueryParameters) === 0) {
+        return this.src;
+      }
       return this.getRequestUrl(this.src);
     },
     useAuthenticatedFetch() {
@@ -117,13 +125,18 @@ export default {
     src() {
       this.failed = false;
       this.brokenSrc = null;
+      // Whether a fetch needs authentication depends on the URL, so a new
+      // src can need the lazy observer when the old one did not.
+      this.armObserver();
       this.resolve();
     },
     requestHeaders: {
       deep: true,
       handler() {
-        // Re-resolve after login/logout
+        // Re-resolve after login/logout. A login can introduce the need for
+        // authenticated fetches, so the lazy observer may have to be armed now.
         this.failed = false;
+        this.armObserver();
         this.resolve();
       }
     }
@@ -132,30 +145,7 @@ export default {
     this.resolve();
   },
   mounted() {
-    if (!this.lazy || this.nearViewport) {
-      return;
-    }
-    // Defer authenticated requests until the image comes close to the
-    // viewport, native lazy loading can't cover them. Observe the closest
-    // ancestor that retains layout: until the image is loaded the root is a
-    // placeholder node and ancestors may be hidden (e.g. `:empty` wrappers).
-    let target = this.$el instanceof Element ? this.$el : this.$el.parentElement;
-    while (target && target.offsetParent === null && target !== document.body) {
-      target = target.parentElement;
-    }
-    if (!window.IntersectionObserver || !target) {
-      this.nearViewport = true;
-      this.resolve();
-      return;
-    }
-    this.observer = markRaw(new IntersectionObserver(entries => {
-      if (entries.some(entry => entry.isIntersecting)) {
-        this.disconnectObserver();
-        this.nearViewport = true;
-        this.resolve();
-      }
-    }, { rootMargin: '200px' }));
-    this.observer.observe(target);
+    this.armObserver();
   },
   beforeUnmount() {
     this.disconnectObserver();
@@ -172,6 +162,40 @@ export default {
         this.observer.disconnect();
         this.observer = null;
       }
+    },
+    // Defer authenticated requests until the image comes close to the
+    // viewport, native lazy loading can't cover them. The observer exists
+    // only for that: a plain <img> is covered by `loading="lazy"`, so without
+    // header credentials nothing is armed — otherwise every card thumbnail
+    // would pay for an ancestor walk (a layout flush during mount) and an
+    // observer that defers nothing.
+    armObserver() {
+      if (!this.lazy || this.nearViewport || this.observer || !this.$el) {
+        return;
+      }
+      if (!needsAuthenticatedFetch(this.$store, this.src)) {
+        return;
+      }
+      // Observe the closest ancestor that retains layout: until the image is
+      // loaded the root is a placeholder node and ancestors may be hidden
+      // (e.g. `:empty` wrappers).
+      let target = this.$el instanceof Element ? this.$el : this.$el.parentElement;
+      while (target && target.offsetParent === null && target !== document.body) {
+        target = target.parentElement;
+      }
+      if (!window.IntersectionObserver || !target) {
+        this.nearViewport = true;
+        this.resolve();
+        return;
+      }
+      this.observer = markRaw(new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          this.disconnectObserver();
+          this.nearViewport = true;
+          this.resolve();
+        }
+      }, { rootMargin: '200px' }));
+      this.observer.observe(target);
     },
     async resolve() {
       if (!this.useAuthenticatedFetch) {
