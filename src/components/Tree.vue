@@ -18,7 +18,7 @@
         <b-icon-file-earmark-richtext />
       </b-button><!--
       
-      --><b-button size="sm" variant="light" :class="{path: onPath || active}" :disabled="!to && !active" :to="to" @click="onClick">
+      --><b-button size="sm" variant="light" :class="{path: onPath || active}" :disabled="!to && !active" :to="to || undefined" @click="onClick">
         {{ title }}
       </b-button>
 
