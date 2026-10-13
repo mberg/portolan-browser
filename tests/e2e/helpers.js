@@ -219,6 +219,69 @@ export async function requireAuth(worker, url, check) {
   );
 }
 
+/**
+* Record the headers of every request to a URL without affecting the response.
+*
+* Registers a pass-through MSW handler that stores each request's headers and
+* yields to the regular resource handler. Register AFTER `createServer` so it
+* runs first (later handlers take precedence in playwright-msw).
+*
+* Prefer this over `page.waitForRequest` when the request may fire at an
+* unpredictable time (e.g. the background prefetch of catalog cards): the
+* handler sees every request from the start, so there is no race between the
+* request and the registration of a waiter.
+*
+* @param {import('playwright-msw').MockServiceWorker} worker
+* @param {string} url – exact URL to observe
+* @returns {Promise<Array<Record<string, string>>>} live array with one header record (lowercase names) per request
+*/
+export async function recordRequestHeaders(worker, url) {
+  const requests = [];
+  await worker.use(
+    http.get(url, ({ request }) => {
+      requests.push(Object.fromEntries(request.headers));
+      return undefined; // fall through to the resource handler
+    }),
+  );
+  return requests;
+}
+
+/**
+* Serve a 1x1 PNG for a URL, optionally guarded by an authentication check,
+* and record all requests to it.
+*
+* Returns the list of recorded requests (`{url, headers}`), which is filled
+* as requests arrive — use `expect.poll` to await it.
+*
+* @param {import('playwright-msw').MockServiceWorker} worker
+* @param {string} url – exact URL to serve the image for
+* @param {(request: Request) => boolean} [check] – when given, requests failing the check get a 401
+* @returns {Promise<Array<{url: string, headers: Object}>>} the recorded requests
+*/
+export async function mockImage(worker, url, check = null) {
+  // A 1x1 transparent PNG
+  const png = Uint8Array.from(
+    atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='),
+    c => c.charCodeAt(0),
+  );
+  const requests = [];
+  await worker.use(
+    http.get(url, ({ request }) => {
+      requests.push({
+        url: request.url,
+        headers: Object.fromEntries(request.headers.entries()),
+      });
+      if (check && !check(request)) {
+        return new HttpResponse(null, { status: 401 });
+      }
+      return HttpResponse.arrayBuffer(png.buffer.slice(0), {
+        headers: { 'Content-Type': 'image/png' },
+      });
+    }),
+  );
+  return requests;
+}
+
 /** Check that a request carries the given header value. */
 export const hasHeader = (name, value) => (request) => request.headers.get(name) === value;
 
