@@ -33,6 +33,16 @@ export function prefixedPath(prefix, browserPath) {
 }
 
 /**
+* Parse the app route out of a page URL. Portolan runs in hash history mode
+* (config.js `historyMode: "hash"`), so the route and its query live in the
+* URL fragment rather than in the path.
+*
+* @param {URL} url - The page URL, e.g. `new URL(page.url())`
+* @returns {URL} The route as a URL on a placeholder origin
+*/
+export const route = url => new URL(url.hash.slice(1) || '/', 'http://route.invalid');
+
+/**
 * Register a mock STAC resource response via MSW.
 * Mocks a successful JSON response with the provided data.
 * Used for homepage.spec.js tests to mock the STAC Index.

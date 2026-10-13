@@ -6,13 +6,9 @@
  * - Conformance classes of the catalog are not applied to external content
  */
 import { test, expect } from './fixtures.js';
-import { configureBrowser, openSourcePanel, waitForBrowserReady } from './helpers.js';
+import { configureBrowser, openSourcePanel, route, waitForBrowserReady } from './helpers.js';
 import StaticCatalog from '../fixtures/instances/static.js';
 import API from '../fixtures/instances/api.js';
-
-// Portolan runs in hash history mode (config.js `historyMode: "hash"`), so the
-// route and its query live in the URL fragment. `route` parses that fragment.
-const route = url => new URL(url.hash.slice(1) || '/', 'http://route.invalid');
 
 const MAIN_URL = 'https://main.example/catalog.json';
 const PRODUCT_PATH = '/products/my-product/collection.json';

@@ -288,7 +288,7 @@ test.describe('Favorites', () => {
       { href: 'https://other.example/external.json', title: 'External Collection', type: 'Collection' }
     ]);
 
-    await page.goto('/favorites');
+    await page.goto('/#/favorites');
     await expect(page.getByRole('link', { name: 'Example Collection' })).toBeVisible();
     await expect(page.getByText('External Collection')).toHaveCount(0);
   });
@@ -304,7 +304,7 @@ test.describe('Favorites', () => {
     await expect(favoritesNav(page)).toHaveCount(0);
 
     // The route is not registered, so the Favorites page can't be opened directly
-    await page.goto('/favorites');
+    await page.goto('/#/favorites');
     await expect(page.locator('main.favorites')).toHaveCount(0);
   });
 

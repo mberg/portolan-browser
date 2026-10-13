@@ -5,10 +5,9 @@
  * Verifies metadata rendering, geometry display, asset listing, and breadcrumb navigation.
  */
 import { test, expect } from './fixtures.js';
-import { waitForBrowserReady } from './helpers.js';
+import { mockImage, waitForBrowserReady } from './helpers.js';
 import StaticCatalog from '../fixtures/instances/static.js';
 import API from '../fixtures/instances/api.js';
-import { http, HttpResponse } from 'msw';
 
 test.describe('Item view - Metadata', () => {
   function createCatalog() {
@@ -219,8 +218,6 @@ test.describe('Item view - Assets', () => {
 });
 
 test.describe('Item view - Alternate thumbnails', () => {
-  // A minimal 1x1 PNG, served for the HTTPS alternate of an S3-only thumbnail.
-  const PNG_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
   const THUMB_URL = 'https://stac.example/thumbnail-https.png';
 
   function createCatalog() {
@@ -256,12 +253,7 @@ test.describe('Item view - Alternate thumbnails', () => {
     await catalog.createServer(worker);
     // Serve an actual image for the HTTPS alternate (added after createServer,
     // which resets handlers).
-    await worker.use(
-      http.get(THUMB_URL, () => {
-        const bytes = Uint8Array.from(atob(PNG_BASE64), c => c.charCodeAt(0));
-        return new HttpResponse(bytes, { headers: { 'Content-Type': 'image/png' } });
-      })
-    );
+    await mockImage(worker, THUMB_URL);
 
     await page.goto(item.getBrowserPath());
     await waitForBrowserReady(page);
