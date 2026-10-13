@@ -505,12 +505,16 @@ To clarify the behavior, please have a look at the following table:
 
 ### displayPreview
 
+> Portolan Browser uses a MapLibre map instead of OpenLayers. This option has no effect in Portolan Browser.
+
 If set to `true` (default), displays preview images that a browser can display (e.g. PNG, JPEG) on the map as default visualization, i.e. from assets with any of the roles `thumbnail`, `overview`, or a link with relation type `preview`.
 The previews are often not covering the full extents and as such may be placed incorrectly on the map.
 
 If both `displayPreview` and `displayOverview` (see below) are enabled, STAC Browser prefers the overviews (COGs) over the previews (PNG, JPEG, ...).
 
 ### displayOverview
+
+> Portolan Browser uses a MapLibre map instead of OpenLayers. This option has no effect in Portolan Browser.
 
 If set to `true` (default), allows to display COGs and, if `displayGeoTiffByDefault` is enabled, GeoTiffs on the map as default visualization, usually from an asset with role `overview` or `visual`.
 
@@ -522,12 +526,16 @@ Similar to `displayPreview` (see above), but applies only to maps that show mult
 
 ### displayOverviewsForChildren
 
+> Portolan Browser uses a MapLibre map instead of OpenLayers. This option has no effect in Portolan Browser.
+
 Similar to `displayOverview` (see above), but defaults to `false`.
 Applies only to maps that show multiple STAC entitieies, i.e. lists of items for a Collection or Search.
 Displaying a large number of COGs or Zarrs at the same time on a map, can be slow.
 Thus, this is disabled by default.
 
 ### displayGeoTiffByDefault
+
+> Portolan Browser uses a MapLibre map instead of OpenLayers. This option has no effect in Portolan Browser.
 
 If set to `true`, the map also shows non-cloud-optimized GeoTiff files by default. Otherwise (`false`, default), it only shows COGs and you can only enforce showing GeoTiffs to be loaded with the "Show on map" button but they are never loaded automatically.
 Loading non-cloud-optimized GeoTiffs only works reliably for smaller files (< 1MB) with a certain structure. It may also work for larger files, but it depends a lot on the underlying client hardware and software.
@@ -564,6 +572,8 @@ Example for EPSG:2056:
 ```
 
 ### getMapSourceOptions
+
+> Portolan Browser uses a MapLibre map instead of OpenLayers. This option has no effect in Portolan Browser.
 
 Corresponds to the ol-stac parameter `getSourceOptions`:
 
