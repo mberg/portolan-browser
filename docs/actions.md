@@ -19,7 +19,7 @@ The following actions are available:
 
 - `Cesium`: Allows to open OGC 3D Tiles (media type `application/3dtiles+json`) files through the Cesium Sandcastle at <https://sandcastle.cesium.com>.
 - `CopcViewer`: Allows to open Cloud-Optimized Point Cloud (COPC, media type `application/vnd.laszip+copc`) files through the Hobu COPC Viewer at <https://viewer.copc.io>.
-- `F3D`: Allows to open 3D models (media types `model/gltf-binary`, `model/gltf+json`, and `application/fbx`) files through the F3D Web App at <https://f3d.app/web>.
+- `F3D`: Allows to open 3D models (media types `model/gltf-binary`, `model/gltf+json`, and `application/fbx`) files through the F3D Web App at <https://f3d.app/viewer/>.
 - `Felt`: Allows to open GeoTIFF, GeoJSON and KML/KMZ files through Felt at <https://felt.com/map/>.
 - `Geofox`: Allows to open OGC 3D Tiles  (media type `application/3dtiles+json`) files through the 3D Assets Viewer at <https://viewer.geofox.ai>.
 - `GeoJsonIo`: Allows to open GeoJSON files through [geojson.io](https://geojson.io).
