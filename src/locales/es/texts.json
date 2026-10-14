@@ -20,6 +20,7 @@
       "generic": "Descargar",
       "withSource": "Descargar desde {source}"
     },
+    "formatHelp": "Más información sobre la conversión de formatos",
     "inItems": "Recurso en elementos | Recursos en elementos",
     "role": {
       "data": "Datos",
@@ -55,6 +56,7 @@
     "user": "Usuario"
   },
   "browse": "Explorar",
+  "builtOn": "basado en",
   "cancel": "Cancelar",
   "catalog": {
     "license": "Licencia",
@@ -173,6 +175,15 @@
   },
   "in": "en {catalog}",
   "index": {
+    "portolanRegistry": "Registro de Portolan",
+    "registryCollections": "{count} colección | {count} colecciones",
+    "registryCountsPartial": "{counts} hasta ahora",
+    "registryFeatures": "{count} entidad | {count} entidades",
+    "registryLoading": "Cargando el registro de Portolan…",
+    "registryUnavailable": "No se pudo cargar el registro de Portolan. Puede introducir la URL de un catálogo arriba.",
+    "selectFromRegistry": "... o seleccione un catálogo del {registry}:",
+    "searchRegistry": "Buscar en el registro por nombre o URL",
+    "searchRegistryNoMatch": "Ningún catálogo registrado coincide con \"{query}\".",
     "api": "API",
     "catalog": "Catálogo Estático",
     "load": "Cargar",
@@ -241,6 +252,7 @@
     "layers": {
       "base": "Capas base",
       "footprint": "Huella",
+      "overflow": "{count} capas más no mostradas",
       "title": "Capas",
       "unnamed": "Sin nombre #{id}"
     },
@@ -249,6 +261,16 @@
     },
     "nobasemap": "No hay mapas base disponibles.",
     "nodata": "No hay información espacial en los metadatos.",
+    "styles": {
+      "legend": "Leyenda",
+      "select": "Seleccionar estilo del mapa"
+    },
+    "vectorFallback": {
+      "loadError": "No se pudieron cargar los datos GeoParquet para mostrarlos.",
+      "reprojectionFailed": "No se pudo colocar ninguna entidad en el mapa. El archivo declara {crs}, pero sus coordenadas están fuera de ese sistema; el CRS declarado puede no corresponder a los datos.",
+      "tooBig": "El archivo GeoParquet es demasiado grande para cargarlo en el mapa ({size} MB, límite {maxSize} MB).",
+      "tooLarge": "Los datos GeoParquet tienen {count} entidades, demasiadas para mostrarlas directamente en el mapa (límite: {max})."
+    },
     "zoom": {
       "in": {
         "description": "Acercar el zoom",
@@ -262,6 +284,7 @@
   },
   "messageForSchemaError": "{message}, para el esquema {schemaPath}",
   "metadata": {
+    "additional": "Metadatos adicionales",
     "general": "General",
     "title": "Metadatos"
   },
@@ -279,6 +302,21 @@
     "last": "Último »",
     "next": "Siguiente ›",
     "previous": "‹ Anterior"
+  },
+  "parquet": {
+    "allColumns": "Todas las columnas",
+    "dataPreview": "Vista previa de datos",
+    "filterPlaceholder": "Filtrar filas...",
+    "loadFailed": "No se pudieron cargar los datos parquet: {message}",
+    "loadedRowCount": "{loaded} / {total} fila | {loaded} / {total} filas",
+    "loadingMetadata": "Cargando metadatos...",
+    "loadingRows": "Cargando fila ({count})... | Cargando filas ({count})...",
+    "networkError": "No se puede mostrar la vista previa: el acceso entre orígenes no está permitido o hay un error de red.",
+    "pageRows": "Fila {from}–{to} de {total} | Filas {from}–{to} de {total}",
+    "retry": "Reintentar",
+    "rowCount": "{count} fila | {count} filas",
+    "showingOf": "Mostrando la primera {loaded} de {total} fila | Mostrando las primeras {loaded} de {total} filas",
+    "zoomToFeature": "Acercar a la entidad"
   },
   "poweredBy": "Ofrecido por {link}",
   "programming": {
@@ -319,6 +357,7 @@
   },
   "reset": "Restablecer",
   "search": {
+    "collectionsRequired": "Seleccione al menos una colección para buscar elementos.",
     "addCollections": "Presione enter para añadir una colección",
     "addDate": "Añadir fecha",
     "addFilter": "Añadir filtro",
