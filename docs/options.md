@@ -441,8 +441,8 @@ If you want to avoid this, disable this setting.
 
 ## Mapping
 
-All the mapping-related options are passed through to [ol-stac](https://m-mohr.github.io/ol-stac/).
-More information on these configuration options may be found in the [ol-stac documentation](https://m-mohr.github.io/ol-stac/en/latest/apidoc/module-ol_layer_STAC-STACLayer.html).
+All the mapping-related options are passed through to [ol-stac](https://ol-stac.moregeo.it/).
+More information on these configuration options may be found in the [ol-stac documentation](https://ol-stac.moregeo.it/en/latest/apidoc/module-ol_layer_STAC-STACLayer.html).
 
 ### buildTileUrlTemplate
 
@@ -455,7 +455,7 @@ If the option `useTileLayerAsFallback` is set to `true`, the tile server is only
 
 You can enable this option by providing a function with a single parameter that returns a tile server template url.
 The given function can optionally be async (i.e. return a Promise).
-The parameter passed into the function is an [Asset object](https://m-mohr.github.io/stac-js/latest/#asset) as defined in stac-js.
+The parameter passed into the function is an [Asset object](https://stac-js.moregeo.it/latest/#asset) as defined in stac-js.
 
 **Example**:
 
@@ -607,15 +607,15 @@ getSourceOptions: async (type, options) => {
 > Portolan Browser uses a MapLibre map instead of OpenLayers. This option has no effect in Portolan Browser.
 
 A function that can customize the options of the individual OpenLayers layers that
-[ol-stac](https://m-mohr.github.io/ol-stac/) creates for the assets and links of a STAC object.
-It is passed through to the [`getLayerOptions` option of the ol-stac `STACLayer`](https://m-mohr.github.io/ol-stac/en/latest/apidoc/module-ol-stac_layer_STAC-STACLayer.html)
+[ol-stac](https://ol-stac.moregeo.it/) creates for the assets and links of a STAC object.
+It is passed through to the [`getLayerOptions` option of the ol-stac `STACLayer`](https://ol-stac.moregeo.it/en/latest/apidoc/module-ol_layer_STAC-STACLayer.html)
 and is called right before each individual layer is created:
 
 ```js
 getStacLayerOptions(type, options, reference) => options | Promise<options>
 ```
 
-- `type` is the [layer type](https://m-mohr.github.io/ol-stac/en/latest/apidoc/module-ol-stac_layer_type-LayerType.html)
+- `type` is the [layer type](https://ol-stac.moregeo.it/en/latest/apidoc/module-ol_layer_type.html)
   that is going to be created (compare with `String(type)`, such as `'WebGLTile'` for GeoTIFF and GeoZarr layers).
 - `options` are the assembled layer options.
 - `reference` is the STAC Asset or Link the layer is created for.
@@ -624,7 +624,7 @@ The function can be asynchronous to load a style definition that the STAC metada
 This only delays the creation of the individual layer.
 
 Use this function to customize the map rendering per asset or link.
-One use is a raster [style](https://openlayers.org/en/latest/apidoc/module-ol_layer_WebGLTile.js.html#~Style)
+One use is a raster [style](https://openlayers.org/en/latest/apidoc/module-ol_layer_WebGLTile.html#~Style)
 that rescales single-band data, which otherwise renders without contrast.
 
 The following code applies a grayscale style to all GeoZarr/GeoTIFF layers
