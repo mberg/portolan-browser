@@ -303,6 +303,21 @@
     "next": "Next ›",
     "previous": "‹ Previous"
   },
+  "parquet": {
+    "allColumns": "All columns",
+    "dataPreview": "Data Preview",
+    "filterPlaceholder": "Filter rows...",
+    "loadFailed": "Failed to load parquet data: {message}",
+    "loadedRowCount": "{loaded} / {total} row | {loaded} / {total} rows",
+    "loadingMetadata": "Loading metadata...",
+    "loadingRows": "Loading row ({count})... | Loading rows ({count})...",
+    "networkError": "Unable to preview: cross-origin access not allowed or network error.",
+    "pageRows": "Row {from}–{to} of {total} | Rows {from}–{to} of {total}",
+    "retry": "Retry",
+    "rowCount": "{count} row | {count} rows",
+    "showingOf": "Showing first {loaded} of {total} row | Showing first {loaded} of {total} rows",
+    "zoomToFeature": "Zoom to feature"
+  },
   "poweredBy": "Powered by {link}",
   "programming": {
     "csharp": "C#",
